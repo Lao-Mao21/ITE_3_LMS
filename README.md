@@ -1,11 +1,11 @@
-ITE 3 - Midterm Project Instructions
+**ITE 3 - Midterm Project Instructions**
 Laravel CRUD Management System
 
-Project Overview
+**Project Overview**
 Create a Management System of your choice using Laravel, Tailwind CSS, and 
 MySQL.
 
-Required Features
+**Required Features**
 1. Two Related Tables (One-to-Many)
 Example: Books (Many) → Categories (One)
 • Primary table (like Students)
@@ -49,7 +49,8 @@ Same as Courses page in the example:
 • Secondary page link
 • Active link highlighting
 • User profile section with logout
-Technical Requirements
+
+**Technical Requirements**
 Backend:
 • Two Models with belongsTo() and hasMany() relationships
 • Two Controllers with: index(), store(), update(), destroy()
