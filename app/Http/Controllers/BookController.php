@@ -10,11 +10,11 @@ use Illuminate\View\View;
 
 class BookController extends Controller
 {
-    public function index() //show all courses in the database and display the data
+    public function index() //show all categories in the database and display the data
     {
         $books = Book::latest()->get(); //add your model to fetch data
-        $categories = Category::all();
-        $activeBooks = Category::count(); //count active courses
+        $categories = Category::all(); //count active categories
+        $books = Book::with('category')->get();
         return view('dashboard', compact('books', 'categories')); //add a view in app/resources/views
     }
 

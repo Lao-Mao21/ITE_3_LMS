@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('create_category')">
+<x-layouts.app :title="__('Categories')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
 
         @if(session('success'))
@@ -20,16 +20,17 @@
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">Category Name</label>
                                 <input type="text" name="name" value="{{ old('name') }}"
-                                       placeholder="Enter course name" required
+                                       placeholder="Enter category name" required
                                        class="w-full rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100">
                                 @error('name')
                                     <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                                 @enderror
+                                <form method="POST" action="{{ route('categories.store') }}">
                             </div>
 
                             <div class="md:col-span-2">
                                 <label class="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">Description</label>
-                                <textarea name="description" rows="1" placeholder="Enter course description"
+                                <textarea name="description" rows="1" placeholder="Enter category description"
                                           class="w-full rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100">{{ old('description') }}</textarea>
                                 @error('description')
                                     <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -45,9 +46,9 @@
                     </form>
                 </div>
 
-                <!-- Course List Table -->
+                <!-- Category List Table -->
                 <div class="flex-1 overflow-auto">
-                    <h2 class="mb-4 text-lg font-semibold text-neutral-900 dark:text-neutral-100">Course List</h2>
+                    <h2 class="mb-4 text-lg font-semibold text-neutral-900 dark:text-neutral-100">Category List</h2>
                     <div class="overflow-x-auto">
                         <table class="w-full min-w-full">
                             <thead>
@@ -59,23 +60,23 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
-                                @forelse($courses as $course)
-                                    <tr class="transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50" id="course-row-{{ $category->id }}">
+                                @forelse($categories as $category)
+                                    <tr class="transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50" id="category-row-{{ $category->id }}">
                                         <td class="px-4 py-3 text-center text-sm text-neutral-600 dark:text-neutral-400">{{ $loop->iteration }}</td>
                                         <td class="px-4 py-3 text-center text-sm text-neutral-900 dark:text-neutral-100">
-                                            <span class="course-name-display">{{ $category->name }}</span>
+                                            <span class="category-name-display">{{ $category->name }}</span>
                                         </td>
                                         <td class="px-4 py-3 text-center text-sm text-neutral-600 dark:text-neutral-400">
-                                            <span class="course-description-display">{{ Str::limit($category->description, 50) ?? 'N/A' }}</span>
+                                            <span class="category-description-display">{{ Str::limit($category->description, 50) ?? 'N/A' }}</span>
                                         </td>
                                         <td class="px-4 py-3 text-center text-sm">
-                                            <button onclick="editCourse({{ $category->id }}, '{{ $category->name }}', '{{ addslashes($category->description) }}')"
+                                            <button onclick="editCategory({{ $category->id }}, '{{ $category->name }}', '{{ addslashes($category->description) }}')"
                                                     class="text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
                                                 Edit
                                             </button>
                                             <span class="mx-1 text-neutral-400">|</span>
                                             <form action="{{ route('categories.destroy', $category) }}" method="POST" class="inline"
-                                                  onsubmit="return confirm('Are you sure? This will unassign all students from this course.')">
+                                                  onsubmit="return confirm('Are you sure? This will unassign all students from this category.')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
@@ -87,7 +88,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="5" class="px-4 py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
-                                            No categories found. Add your first course above!
+                                            No categories found. Add your first category above!
                                         </td>
                                     </tr>
                                 @endforelse
@@ -110,7 +111,7 @@
                 <div class="grid gap-4 md:grid-cols-2">
                     <div>
                         <label class="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">Category Name</label>
-                        <input type="text" id="edit_category_name" name="course_name" required
+                        <input type="text" id="edit_category_name" name="category_name" required
                                class="w-full rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100">
                     </div>
 
@@ -137,7 +138,7 @@
     </div>
 
     <script>
-        function editCourse(id, name, description) {
+        function editCategory(id, name, description) {
             document.getElementById('editCategoryModal').classList.remove('hidden');
             document.getElementById('editCategoryModal').classList.add('flex');
             document.getElementById('editCategoryForm').action = `/categories/${id}`;

@@ -27,16 +27,8 @@ class Category extends Model
         return $this->books()->count();
     }
 
-    //books with categories
-    public function scopeHasBooks($query)
+    public function students()
     {
-        return $query->whereHas('books');
-    }
-
-    //search categories
-    public function scopeSearch($query, $search)
-    {
-        return $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
-    }
+        return $this->hasMany(Student::class);
+    } 
 }

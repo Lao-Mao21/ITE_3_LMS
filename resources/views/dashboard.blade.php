@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('dashboard')">
+<x-layouts.app :title="__('Dashboard')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
 
         {{-- Success Message --}}
@@ -28,7 +28,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Total Categories</p>
-                        <h3 class="mt-2 text-3xl font-bold text-neutral-900 dark:text-neutral-100">12</h3>
+                        <h3 class="mt-2 text-3xl font-bold text-neutral-900 dark:text-neutral-100">{{ $categories->count() }}</h3>
                     </div>
                     <div class="rounded-full bg-green-100 p-3 dark:bg-green-900/30">
                         <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,7 +70,7 @@
                         </div>
                         <div>
                             <label class="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">Author</label>
-                            <input type="email" name="author" value="{{ old('author') }}" placeholder="Enter author" required class="w-full rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100">
+                            <input type="text" name="author" value="{{ old('author') }}" placeholder="Enter author" required class="w-full rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100">
                             @error('author')
                                 <p class="mt-1 text-xs text-red-600"> {{ $message }} </p>
                             @enderror
@@ -141,6 +141,16 @@
                             <thead>
                                 <tr class="border-b border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900/50">
                                     <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">#</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Title</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Author</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">ISBN</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Publication Year</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Category</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Publisher</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Page Count</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Language</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Availability</th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
@@ -151,7 +161,7 @@
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->author }}</td>
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->isbn }}</td>
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->publication_year }}</td>
-                                        <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->category_id }}</td>
+                                        <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->category->name ?? 'N/A' }}</td>
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->publisher }}</td>
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->page_count }}</td>
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->language }}</td>
