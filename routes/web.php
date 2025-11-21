@@ -6,14 +6,31 @@ use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', [BookController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+//Categories Routes - CRUD operations
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+});
+
+//Books Routes - CRUD operations
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/books', [BookController::class, 'index'])->name('books.index');
+    Route::post('/books', [BookController::class, 'store'])->name('books.store');
+    Route::put('/books/{book}', [BookController::class, 'update'])->name('books.update');
+    Route::delete('/books/{book}', [BookController::class, 'destroy'])->name('books.destroy');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
