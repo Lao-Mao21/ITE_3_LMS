@@ -42,6 +42,21 @@ class BookController extends Controller
         return redirect()->back()->with('success', 'Book created successfully!');
     }
 
+    public function edit(Book $book)
+    {
+        return response()->json([
+            'id' => $book->id,
+            'title' => $book->title,
+            'author' => $book->author,
+            'isbn' => $book->isbn,
+            'publication_year' => $book->publication_year,
+            'category_id' => $book->category_id,
+            'publisher' => $book->publisher,
+            'page_count' => $book->page_count,
+            'language' => $book->language,
+        ]);
+    }
+
     public function update(Request $request, Book $book): RedirectResponse
     {
         $validated = $request->validate([
@@ -53,7 +68,6 @@ class BookController extends Controller
             'publisher' => 'nullable|string|max:255',
             'page_count' => 'nullable|integer|min:1',
             'language' => 'nullable|string|max:50',
-            'is_available' => 'boolean',
         ]);
 
         $book->update($validated);

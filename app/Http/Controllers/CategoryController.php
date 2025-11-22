@@ -32,20 +32,36 @@ class CategoryController extends Controller
         Category::create($validated); //validate data input
         return redirect()->back()->with('success', 'Category added sucessfully.'); //redirect to previous page and display sucess msg
     }
-    public function update(Request $request, Category $categories) // updates the database
+
+    public function edit(Category $category) //input data into the database, validates it first
+    {
+        return response()->json([
+            'id' => $category->id,
+            'name' => $category->name,
+            'description' => $category->description,
+        ]);
+    }
+
+    public function update(Request $request, Category $category): RedirectResponse // updates the database
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
-        ]); //same thing as store but for updates
+            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'description' => 'nullable|string|max:500',
+        ]);
 
-        $categories->update($validated); //validate update
+        $category->update($validated); //validate update
         return redirect()->back()->with('sucess', 'Category updated sucessfully.'); //redirect to previous page and display sucess msg
     }
-    public function destroy(Category $categories) //deletes data in the database
+    
+    public function destroy(Category $category) //deletes data in the database
     {
+        // Check if category has active books
+        if ($category->books()->where('is_deleted', false)->exists()) {
+            return redirect()->back()
+                ->with('error', 'Cannot delete category that has active books.');
+        }
         //$categories->delete(); hard delete 
-        $categories->update(['is_deleted' => true]); //soft delete
+        $category->update(['is_deleted' => true]); //soft delete
         return redirect()->back()->with('sucess', 'Category added sucessfully.'); //redirect to previous page and display sucess msg
     }
 

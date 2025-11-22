@@ -24,6 +24,10 @@ class Category extends Model
         return $this->hasMany(Book::class);
     }
 
+    protected $casts = [
+        'is_deleted' => 'boolean'  // Make sure this is cast to boolean
+    ];
+
     //book count
     public function getBooksCountAttribute(): int
     {

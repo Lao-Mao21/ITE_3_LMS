@@ -8,7 +8,7 @@
             <div class="space-x-2">
                 <a href="{{ route('books.index') }}" 
                 class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-                    Back to Active Books
+                    Return
                 </a>
             </div>
         </div>
@@ -33,6 +33,7 @@
                             <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Title</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Author</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">ISBN</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Deleted At</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Actions</th>
                         </tr>
                     </thead>

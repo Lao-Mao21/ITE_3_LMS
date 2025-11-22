@@ -4,7 +4,7 @@
 
         {{-- Success Message --}}
         @if (session('success'))
-            <div class="rounded-lg bg-green-50 p-4 text-sm text-green-700">
+            <div class="rounded-lg bg-green-300/60 p-4 text-sm text-black dark:text-white">
                 {{ session('success') }}    
             </div>
         @endif
@@ -162,11 +162,11 @@
                                         <td class="px-4 py-3 text-sm text-center border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300">
                                             <button onclick="openEditModal({{ $book->id }})" class="text-blue-600 hover:underline transition-colors hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400">Edit</button>
                                             {{-- <span class="mx-1 text-neutral-400">|</span> --}}
-                                            <form method="POST" class="inline" onsubmit="return comfirm('Are you sure you want to delete this book?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button onclick="deleteBookModal({{ $book->id }}, '{{ addslashes($book->title) }}')" type="submit" class="text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">Delete</button>
-                                            </form>
+                                            <button 
+                                                onclick="openDeleteModal({{ $book->id }}, '{{ addslashes($book->title) }}')" 
+                                                class="text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
+                                                Delete
+                                            </button>
                                         </td>
                                     </tr>
                                 @empty
@@ -254,17 +254,17 @@
                 </div>
 
                 <!-- Delete Confirmation Modal -->
-                <div id="deleteBookModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div id="deleteBookModal" class="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50 hidden">
                     <div class="bg-white dark:bg-neutral-800 rounded-lg shadow-xl w-full max-w-md mx-4">
                         <div class="px-6 py-4 border-b border-neutral-200 dark:border-neutral-700">
                             <h3 class="text-lg font-semibold text-red-600 dark:text-red-400">Delete Book</h3>
                         </div>
                         <div class="p-6">
                             <p class="text-neutral-700 dark:text-neutral-300 mb-4">
-                                Are you sure you want to delete the book "<span id="deleteBookTitle" class="font-semibold"></span>"?
+                                Are you sure you want to move the book "<span id="deleteBookTitle" class="font-semibold"></span>" to trash?
                             </p>
                             <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
-                                This action cannot be undone and will permanently remove the book from the system.
+                                This book will be moved to trash and can be restored later.
                             </p>
                         </div>
                         <div class="px-6 py-4 border-t border-neutral-200 dark:border-neutral-700 flex justify-end space-x-3">
@@ -274,10 +274,10 @@
                             </button>
                             <form id="deleteBookForm" method="POST" class="inline">
                                 @csrf
-                                @method('DELETE')
+                                @method('POST')
                                 <button type="submit"
                                     class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors">
-                                    Delete Book
+                                    Move to Trash
                                 </button>
                             </form>
                         </div>
@@ -287,7 +287,7 @@
                 <script>
                 // Edit Modal Functions
                 function openEditModal(bookId) {
-                    // Fetch book data and populate form (you'll need to implement this)
+                    // Fetch book data and populate form
                     fetchBookData(bookId);
                     
                     // Set form action
@@ -306,32 +306,32 @@
                     // Set book title in confirmation message
                     document.getElementById('deleteBookTitle').textContent = bookTitle;
                     
-                    // Set form action
-                    document.getElementById('deleteBookForm').action = `/books/${bookId}`;
+                    // Set form action - use the new route
+                    document.getElementById('deleteBookForm').action = `/books/${bookId}/delete`;
                     
                     // Show modal
                     document.getElementById('deleteBookModal').classList.remove('hidden');
                 }
 
                 function closeDeleteModal() {
-                    document.getElementById('deleteBookModal').classList.add('hidden');
+                    document.getElementById('deleteBookModal').classList.add('hidden'); 
                 }
 
-                // Fetch book data for editing (you need to implement this)
+                // Fetch book data for editing
                 async function fetchBookData(bookId) {
                     try {
                         const response = await fetch(`/books/${bookId}/edit`);
                         const book = await response.json();
                         
                         // Populate form fields
-                        document.getElementById('edit_title').value = books.title || '';
-                        document.getElementById('edit_author').value = books.author || '';
-                        document.getElementById('edit_isbn').value = books.isbn || '';
-                        document.getElementById('edit_publication_year').value = books.publication_year || '';
-                        document.getElementById('edit_category_id').value = books.category_id || '';
-                        document.getElementById('edit_publisher').value = books.publisher || '';
-                        document.getElementById('edit_page_count').value = books.page_count || '';
-                        document.getElementById('edit_language').value = books.language || '';
+                        document.getElementById('edit_title').value = book.title || '';
+                        document.getElementById('edit_author').value = book.author || '';
+                        document.getElementById('edit_isbn').value = book.isbn || '';
+                        document.getElementById('edit_publication_year').value = book.publication_year || '';
+                        document.getElementById('edit_category_id').value = book.category_id || '';
+                        document.getElementById('edit_publisher').value = book.publisher || '';
+                        document.getElementById('edit_page_count').value = book.page_count || '';
+                        document.getElementById('edit_language').value = book.language || '';
                         
                     } catch (error) {
                         console.error('Error fetching book data:', error);

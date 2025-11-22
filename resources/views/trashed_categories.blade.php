@@ -8,7 +8,7 @@
             <div class="space-x-2">
                 <a href="{{ route('categories.index') }}" 
                 class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-                    Back to Active Categories
+                    Return
                 </a>
             </div>
         </div>
@@ -32,6 +32,7 @@
                         <tr class="border-b border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900/50">
                             <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Name</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Description</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Deleted At</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Actions</th>
                         </tr>
                     </thead>
