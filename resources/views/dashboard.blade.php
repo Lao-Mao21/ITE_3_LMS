@@ -1,4 +1,5 @@
 <x-layouts.app :title="__('Dashboard')">
+    <script src="https://kit.fontawesome.com/9d6a4b8185.js" crossorigin="anonymous"></script>
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
 
         {{-- Success Message --}}
@@ -17,9 +18,7 @@
                         <h3 class="mt-2 text-3xl font-bold text-neutral-900 dark:text-neutral-100">{{ $books->count() }}</h3>
                     </div>
                     <div class="rounded-full bg-blue-100 p-3 dark:bg-blue-900/30">
-                        <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
+                        <i class="fa-solid fa-book p-2 h-8 w-8 text-center text-blue-600 dark:text-indigo-400"></i>
                     </div>
                 </div>
             </div>
@@ -31,9 +30,7 @@
                         <h3 class="mt-2 text-3xl font-bold text-neutral-900 dark:text-neutral-100">{{ $categories->count() }}</h3>
                     </div>
                     <div class="rounded-full bg-green-100 p-3 dark:bg-green-900/30">
-                        <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
+                        <i class="fa-solid fa-list text-center p-2 h-8 w-8 text-green-600 dark:text-green-400"></i>
                     </div>
                 </div>
             </div>
@@ -45,9 +42,7 @@
                         <h3 class="mt-2 text-3xl font-bold text-neutral-900 dark:text-neutral-100">Fiction</h3>
                     </div>
                     <div class="rounded-full bg-purple-100 p-3 dark:bg-purple-900/30">
-                        <svg class="h-6 w-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
+                         <i class="fa-solid fa-fire text-center p-2 h-8 w-8 text-amber-600 dark:text-amber-400"></i>
                     </div>
                 </div>
             </div>
@@ -126,7 +121,7 @@
                             @enderror
                         </div>
                         <div class="md:col-span-2">
-                            <button type="submit" class="rounded-lg bg-blue-600 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                            <button type="submit" class="rounded-lg bg-blue-700 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                                 Add Book
                             </button>
                         </div>
@@ -149,11 +144,10 @@
                                     <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Publisher</th>
                                     <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Page Count</th>
                                     <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Language</th>
-                                    <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Availability</th>
                                     <th class="px-4 py-3 text-left text-sm font-semibold text-neutral-700 dark:text-neutral-300">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
+                            <tbody class="divide-y divide-neutral-200 border-neutral-300 border-2 dark:border-neutral-700 dark:divide-neutral-700">
                                 @forelse($books as $book)
                                     <tr>
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->id }}</td>
@@ -165,14 +159,13 @@
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->publisher }}</td>
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->page_count }}</td>
                                         <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->language }}</td>
-                                        <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">{{ $book->is_available }}</td>
-                                        <td class="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
-                                            <button class="text-blue-600 hover:underline">Edit</button>
-                                            <span class="mx-1 text-neutral-400">|</span>
+                                        <td class="px-4 py-3 text-sm text-center border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300">
+                                            <button onclick="openEditModal({{ $book->id }})" class="text-blue-600 hover:underline transition-colors hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400">Edit</button>
+                                            {{-- <span class="mx-1 text-neutral-400">|</span> --}}
                                             <form method="POST" class="inline" onsubmit="return comfirm('Are you sure you want to delete this book?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                                                <button onclick="deleteBookModal({{ $book->id }}, '{{ addslashes($book->title) }}')" type="submit" class="text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -187,6 +180,186 @@
                         </table>
                     </div>
                 </div>
+                
+                <!-- Edit Book Modal -->
+                <div id="editBookModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white dark:bg-neutral-800 rounded-lg shadow-xl w-full max-w-2xl mx-4">
+                        <div class="px-6 py-4 border-b border-neutral-200 dark:border-neutral-700">
+                            <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Edit Book</h3>
+                        </div>
+                        <form id="editBookForm" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="p-6 space-y-4 max-h-96 overflow-y-auto">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="edit_title" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Title *</label>
+                                        <input type="text" id="edit_title" name="title" required
+                                            class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label for="edit_author" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Author *</label>
+                                        <input type="text" id="edit_author" name="author" required
+                                            class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label for="edit_isbn" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">ISBN</label>
+                                        <input type="text" id="edit_isbn" name="isbn"
+                                            class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label for="edit_publication_year" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Publication Year</label>
+                                        <input type="number" id="edit_publication_year" name="publication_year" min="1000" max="{{ date('Y') }}"
+                                            class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label for="edit_category_id" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Category</label>
+                                        <select id="edit_category_id" name="category_id"
+                                            class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                                            <option value="">Select Category</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="edit_publisher" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Publisher</label>
+                                        <input type="text" id="edit_publisher" name="publisher"
+                                            class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label for="edit_page_count" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Page Count</label>
+                                        <input type="number" id="edit_page_count" name="page_count" min="1"
+                                            class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label for="edit_language" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Language</label>
+                                        <input type="text" id="edit_language" name="language"
+                                            class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-6 py-4 border-t border-neutral-200 dark:border-neutral-700 flex justify-end space-x-3">
+                                <button type="button" onclick="closeEditModal()"
+                                    class="px-4 py-2 text-sm font-medium text-neutral-700 bg-neutral-100 hover:bg-neutral-200 rounded-md transition-colors dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600">
+                                    Cancel
+                                </button>
+                                <button type="submit"
+                                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors">
+                                    Update Book
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Delete Confirmation Modal -->
+                <div id="deleteBookModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white dark:bg-neutral-800 rounded-lg shadow-xl w-full max-w-md mx-4">
+                        <div class="px-6 py-4 border-b border-neutral-200 dark:border-neutral-700">
+                            <h3 class="text-lg font-semibold text-red-600 dark:text-red-400">Delete Book</h3>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+                                Are you sure you want to delete the book "<span id="deleteBookTitle" class="font-semibold"></span>"?
+                            </p>
+                            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
+                                This action cannot be undone and will permanently remove the book from the system.
+                            </p>
+                        </div>
+                        <div class="px-6 py-4 border-t border-neutral-200 dark:border-neutral-700 flex justify-end space-x-3">
+                            <button type="button" onclick="closeDeleteModal()"
+                                class="px-4 py-2 text-sm font-medium text-neutral-700 bg-neutral-100 hover:bg-neutral-200 rounded-md transition-colors dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600">
+                                Cancel
+                            </button>
+                            <form id="deleteBookForm" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors">
+                                    Delete Book
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                // Edit Modal Functions
+                function openEditModal(bookId) {
+                    // Fetch book data and populate form (you'll need to implement this)
+                    fetchBookData(bookId);
+                    
+                    // Set form action
+                    document.getElementById('editBookForm').action = `/books/${bookId}`;
+                    
+                    // Show modal
+                    document.getElementById('editBookModal').classList.remove('hidden');
+                }
+
+                function closeEditModal() {
+                    document.getElementById('editBookModal').classList.add('hidden');
+                }
+
+                // Delete Modal Functions
+                function openDeleteModal(bookId, bookTitle) {
+                    // Set book title in confirmation message
+                    document.getElementById('deleteBookTitle').textContent = bookTitle;
+                    
+                    // Set form action
+                    document.getElementById('deleteBookForm').action = `/books/${bookId}`;
+                    
+                    // Show modal
+                    document.getElementById('deleteBookModal').classList.remove('hidden');
+                }
+
+                function closeDeleteModal() {
+                    document.getElementById('deleteBookModal').classList.add('hidden');
+                }
+
+                // Fetch book data for editing (you need to implement this)
+                async function fetchBookData(bookId) {
+                    try {
+                        const response = await fetch(`/books/${bookId}/edit`);
+                        const book = await response.json();
+                        
+                        // Populate form fields
+                        document.getElementById('edit_title').value = books.title || '';
+                        document.getElementById('edit_author').value = books.author || '';
+                        document.getElementById('edit_isbn').value = books.isbn || '';
+                        document.getElementById('edit_publication_year').value = books.publication_year || '';
+                        document.getElementById('edit_category_id').value = books.category_id || '';
+                        document.getElementById('edit_publisher').value = books.publisher || '';
+                        document.getElementById('edit_page_count').value = books.page_count || '';
+                        document.getElementById('edit_language').value = books.language || '';
+                        
+                    } catch (error) {
+                        console.error('Error fetching book data:', error);
+                        alert('Error loading book data');
+                    }
+                }
+
+                // Close modals when clicking outside
+                document.addEventListener('click', function(event) {
+                    const editModal = document.getElementById('editBookModal');
+                    const deleteModal = document.getElementById('deleteBookModal');
+                    
+                    if (event.target === editModal) {
+                        closeEditModal();
+                    }
+                    if (event.target === deleteModal) {
+                        closeDeleteModal();
+                    }
+                });
+
+                // Close modals with Escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape') {
+                        closeEditModal();
+                        closeDeleteModal();
+                    }
+                });
+                </script>
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class Book extends Model
 {
@@ -19,6 +20,7 @@ class Book extends Model
         'publisher',
         'page_count',
         'language',
+        'is_deleted',
         'is_available',
     ];
 
@@ -32,5 +34,21 @@ class Book extends Model
     {
         return $this->belongsTo(Category::class);
         return $this->hasMany(Category::class);
+    }
+
+     /**
+     * Scope a query to only include non-deleted books.
+     */
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('is_deleted', false);
+    }
+
+    /**
+     * Scope a query to only include deleted books.
+     */
+    public function scopeDeleted(Builder $query): void
+    {
+        $query->where('is_deleted', true);
     }
 }

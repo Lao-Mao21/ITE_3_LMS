@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Category extends Model
 {
@@ -13,6 +15,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'description',
+        'is_deleted',
     ];
 
     //One-to-Many relationship with Books
@@ -31,4 +34,20 @@ class Category extends Model
     {
         return $this->hasMany(Student::class);
     } 
+
+    /**
+     * Scope a query to only include non-deleted categories.
+     */
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('is_deleted', false);
+    }
+
+    /**
+     * Scope a query to only include deleted categories.
+     */
+    public function scopeDeleted(Builder $query): void
+    {
+        $query->where('is_deleted', true);
+    }
 }

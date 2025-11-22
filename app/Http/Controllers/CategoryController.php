@@ -12,8 +12,14 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::latest()->get();
+        $categories = Category::where('is_deleted', false)->get();
         return view('categories', compact('categories')); //display the counts in dashboard
+    }
+
+    public function trashed()
+    {
+        $categories = Category::where('is_deleted', true)->get();
+        return view('trashed_categories', compact('categories'));
     }
 
     public function store(Request $request) //input data into the database, validates it first
@@ -38,8 +44,31 @@ class CategoryController extends Controller
     }
     public function destroy(Category $categories) //deletes data in the database
     {
-        $categories->delete(); //delete data
+        //$categories->delete(); hard delete 
+        $categories->update(['is_deleted' => true]); //soft delete
         return redirect()->back()->with('sucess', 'Category added sucessfully.'); //redirect to previous page and display sucess msg
+    }
+
+    public function restore($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->update(['is_deleted' => false]);
+        
+        return redirect()->back()->with('success', 'Category restored successfully.');
+    }
+
+    public function forceDelete($id)
+    {
+        $category = Category::findOrFail($id);
+        
+        // Check if category has any books (even deleted ones)
+        if ($category->books()->exists()) {
+            return redirect()->back()->with('error', 'Cannot permanently delete category that has books.');
+        }
+        
+        $category->delete(); // Permanent delete
+        
+        return redirect()->back()->with('success', 'Category permanently deleted.');
     }
 
     public function authorize()

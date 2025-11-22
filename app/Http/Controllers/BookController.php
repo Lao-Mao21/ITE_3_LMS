@@ -12,10 +12,16 @@ class BookController extends Controller
 {
     public function index() //show all categories in the database and display the data
     {
-        $books = Book::latest()->get(); //add your model to fetch data
-        $categories = Category::all(); //count active categories
-        $books = Book::with('category')->get();
+        $books = Book::where('is_deleted', false)->get();
+        //$books = Book::latest()->get(); //add your model to fetch data
+        $categories = Category::active()->get();
         return view('dashboard', compact('books', 'categories')); //add a view in app/resources/views
+    }
+
+    public function trashed()
+    {
+        $books = Book::with('category')->where('is_deleted', true)->get();// Show only deleted books
+        return view('trashed_books', compact('books'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -57,7 +63,26 @@ class BookController extends Controller
 
     public function destroy(Book $book): RedirectResponse
     {
-        $book->delete();
+        // $book->delete(); hard delete
+        $book->update(['is_deleted' => true]); //soft delete
         return redirect()->back()->with('success', 'Book deleted successfully!');
+    }
+
+    public function restore($id)
+    {
+        $book = Book::findOrFail($id);
+        $book->update(['is_deleted' => false]);
+        
+        return redirect()->route('books.trashed')
+            ->with('success', 'Book restored successfully.');
+    }
+
+    public function forceDelete($id)
+    {
+        $book = Book::findOrFail($id);
+        $book->delete(); // This will permanently delete
+        
+        return redirect()->route('books.trashed')
+            ->with('success', 'Book permanently deleted.');
     }
 }
